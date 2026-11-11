@@ -50,7 +50,7 @@
         vdiv2: d.vdiv2 || 0.5,
         tdiv: d.tdiv || 0.001,
         run: true,
-        t: 0,
+        t: 10, // Startzeit > 0, damit der Trigger-Vorlauf keine negativen Zeiten abtastet
       };
       const W = 560;
       const H = 360;

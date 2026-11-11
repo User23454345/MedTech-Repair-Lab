@@ -31,6 +31,11 @@
       sideTimer = setTimeout(() => {
         renderSidebar();
         renderHeader();
+        content.querySelectorAll('.fc-item[data-pass]').forEach((el) => {
+          const ok = session.hasFinding(el.dataset.pass);
+          el.classList.toggle('ok', ok);
+          el.querySelector('.fc-state').textContent = ok ? '✔' : '○';
+        });
         const old = content.querySelector('.step-nav');
         if (old) old.replaceWith(nav(MTRL.CASE_STEPS[session.stepIndex].id));
       }, 60);
@@ -276,7 +281,7 @@
       if (session.treeDone) {
         const rcBox = h('div.panel', h('h3', 'b) Technische Grundursache bestimmen'));
         const rcFb = h('div');
-        def.diagnosis.rootCauses.forEach((rc) => {
+        shuffled(def.diagnosis.rootCauses, def.id + 'rc').forEach((rc) => {
           const tried = session.rootCauseAttempts.includes(rc.id);
           rcBox.appendChild(h('button.choice' + (tried ? (rc.correct ? '.ok' : '.bad') : ''), { type: 'button', disabled: session.rootCauseSolved && !rc.correct ? true : null, on: { click: () => {
             const r = session.chooseRootCause(rc.id);
@@ -296,7 +301,7 @@
       // c) Instandsetzung
       if (session.rootCauseSolved) {
         const raBox = h('div.panel', h('h3', 'c) Instandsetzungsmaßnahmen festlegen'), h('p.muted', 'Wähle die Maßnahmen, die du durchführen würdest. Achtung: „Tausch auf Verdacht“ und unzulässige Eingriffe kosten Punkte.'));
-        def.diagnosis.repairActions.forEach((a) => {
+        shuffled(def.diagnosis.repairActions, def.id + 'ra').forEach((a) => {
           const done = session.repairActions.includes(a.id);
           const cls = done ? (a.verdict === 'wrong' ? '.bad' : a.verdict === 'neutral' ? '.neutral' : '.ok') : '';
           raBox.appendChild(h('button.choice' + cls, { type: 'button', disabled: done ? true : null, on: { click: () => { session.applyRepair(a.id); render(); } } }, a.text, done ? h('small', a.feedback) : null));
@@ -311,9 +316,9 @@
         session.functionChecks().forEach((fc) => {
           const ok = session.hasFinding(fc.passFinding);
           const inv = def.investigations.find((i) => i.id === fc.investigation);
-          fcBox.appendChild(h('div.fc-item' + (ok ? '.ok' : ''),
+          fcBox.appendChild(h('div.fc-item' + (ok ? '.ok' : ''), { dataset: { pass: fc.passFinding } },
             h('span.fc-state', ok ? '✔' : '○'),
-            h('span.fc-title', fc.title),
+            h('span.fcheck-title', fc.title),
             inv ? h('button.btn.small', { type: 'button', on: { click: () => openInvestigation(inv, host) } }, ok ? 'erneut öffnen' : 'Prüfung durchführen') : null));
         });
         fcBox.appendChild(host);
@@ -396,6 +401,23 @@
       return rep;
     }
 
+    function shuffled(list, key) {
+      return shuffledOrder({ q: key, options: list }).map((i) => list[i]);
+    }
+
+    /** Stabile, aber nicht vorhersagbare Reihenfolge der Antwortoptionen (Hash des Fragetexts). */
+    function shuffledOrder(q) {
+      let seed = 0;
+      for (let i = 0; i < q.q.length; i++) seed = (seed * 31 + q.q.charCodeAt(i)) >>> 0;
+      const idx = q.options.map((_, i) => i);
+      for (let i = idx.length - 1; i > 0; i--) {
+        seed = (seed * 1103515245 + 12345) >>> 0;
+        const j = seed % (i + 1);
+        [idx[i], idx[j]] = [idx[j], idx[i]];
+      }
+      return idx;
+    }
+
     STEP.quiz = () => {
       const qs = def.quiz;
       const wrap = h('div.quiz');
@@ -403,9 +425,9 @@
         const ans = session.quizAnswers[qi];
         wrap.appendChild(h('fieldset.quiz-q' + (session.quizChecked ? (ans === q.correct ? '.ok' : '.bad') : ''),
           h('legend', `${qi + 1}. ${q.q}`),
-          q.options.map((o, oi) => h('label.radio' + (session.quizChecked && oi === q.correct ? '.correct' : ''),
-            h('input', { type: 'radio', name: 'q' + qi, checked: ans === oi, disabled: session.quizChecked ? true : null, on: { change: () => session.answerQuiz(qi, oi) } }),
-            h('span', o))),
+          shuffledOrder(q).map((oi) => h('label.radio' + (session.quizChecked && oi === q.correct ? '.correct' : ''),
+            h('input', { type: 'radio', name: 'q' + qi, value: String(oi), checked: ans === oi, disabled: session.quizChecked ? true : null, on: { change: () => session.answerQuiz(qi, oi) } }),
+            h('span', q.options[oi]))),
           session.quizChecked ? h('div.quiz-explain', q.explain) : null));
       });
       const sc = session.score();

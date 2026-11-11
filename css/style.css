@@ -243,7 +243,7 @@ details.basic[open] summary { border-bottom: 1px solid var(--line); margin-botto
 .choice.bad { border-color: rgba(239,68,68,.7); background: rgba(239,68,68,.08); }
 .choice.neutral { border-color: rgba(245,158,11,.6); background: rgba(245,158,11,.06); }
 .fc-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
-.fc-item .fc-title { flex: 1; }
+.fc-item .fcheck-title { flex: 1; }
 .fc-item.ok .fc-state { color: var(--ok); }
 .doc-form { display: flex; flex-direction: column; gap: 10px; }
 .doc-field { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; background: var(--panel); }
