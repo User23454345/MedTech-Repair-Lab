@@ -1,0 +1,165 @@
+/*
+ * Ersatz- und Verschleißteile: Defibrillator, Ultraschall, Hämodialyse
+ * (generisch, Lernmodell)
+ * Keine realen Artikelnummern – Beschaffung ausschließlich nach Ersatzteilliste
+ * bzw. Zubehörliste des Herstellers. Teile, deren Tausch einen Eingriff in
+ * sicherheitskritische Baugruppen erfordert, sind entsprechend gekennzeichnet.
+ */
+MTRL.registerParts([
+  /* ---------------- Defibrillator ---------------- */
+  {
+    id: 'defi-pads', name: 'Einweg-Defibrillationselektroden (Klebepads)', category: 'Therapiezubehör (Defibrillator)', devices: ['defibrillator'],
+    function: 'Großflächige, selbstklebende Gelelektroden für Schockabgabe, EKG-Ableitung und ggf. externe Stimulation. Ausführungen für Erwachsene und Kinder.',
+    wear: 'hoch', wearInfo: 'Einwegprodukt mit Verfallsdatum; Gel trocknet bei beschädigter Verpackung, Hitze oder Überlagerung aus.',
+    failureModes: ['Meldung „Elektroden prüfen“ / Impedanz zu hoch', 'Schlechte Haftung → ungleichmäßige Stromdichte, Hautverbrennungen möglich', 'Gestörtes EKG über Pads', 'Pads abgelaufen → Gerät meldet ggf. nicht einsatzbereit (bei vorkonnektierten Pads)'],
+    replacement: 'Austausch durch Anwender gegen freigegebene, zum Gerät passende Pads (Stecker/Adapter!). Verfallsdatum regelmäßig kontrollieren; nach Gebrauch immer ersetzen.',
+    checksAfter: ['Verfallsdatum und Verpackung', 'Anschluss am Gerät / Statusanzeige', 'Bei Prüfungen: nicht die Einsatzpads, sondern Trainings-/Prüfadapter laut Hersteller verwenden'],
+    notes: 'Pads nicht wiederverwenden; Trainingspads nie im Einsatzgerät belassen.',
+  },
+  {
+    id: 'defi-pads-cable', name: 'Therapiekabel / Pads-Adapterkabel', category: 'Therapiezubehör (Defibrillator)', devices: ['defibrillator'],
+    function: 'Verbindet Therapiebuchse und Klebepads; überträgt Schockenergie, EKG-Signal und Impedanzmessstrom.',
+    wear: 'hoch', wearInfo: 'Biegebelastung am Knickschutz, Steckzyklen, Quetschen beim Verstauen.',
+    failureModes: ['Meldung „Elektroden prüfen“ trotz neuer Pads (Aderbruch)', 'Sporadische Impedanzsprünge bei Bewegung', 'Erhöhter Übergangswiderstand → zu geringe abgegebene Energie bei der Prüfung', 'Beschädigte Isolation → Gefährdung durch Hochspannung'],
+    replacement: 'Austausch gegen freigegebenes Originalzubehör (Zubehörtausch ohne Öffnen des Gerätes). Keine Reparatur durch Löten oder Kleben.',
+    checksAfter: ['Sichtprüfung', 'Energieabgabe mit Defibrillator-Analysator', 'Impedanzanzeige/Elektrodenerkennung mit Prüfadapter'],
+  },
+  {
+    id: 'defi-paddles', name: 'Externe Paddles (Handelektroden)', category: 'Therapiezubehör (Defibrillator)', devices: ['defibrillator'],
+    function: 'Handelektroden mit Lade- und Auslösetasten; ggf. EKG-Ableitung über die Paddles. Teils mit Kinderelektroden-Aufsatz.',
+    wear: 'hoch', wearInfo: 'Verkratzte oder korrodierte Elektrodenflächen, eingetrocknete Gelreste, Tastenverschleiß, Kabelbruch.',
+    failureModes: ['Laden/Auslösen über Paddles nicht möglich (Taste/Ader)', 'Erhöhter Übergangswiderstand, Funkenbildung', 'Gestörtes Paddles-EKG'],
+    replacement: 'Austausch als komplette Baugruppe gegen Originalteil nach Herstellerangaben. Keine Eingriffe in Tasten- oder Hochspannungsleitungen.',
+    checksAfter: ['Sichtprüfung der Elektrodenflächen', 'Lade- und Auslösefunktion an Defibrillator-Analysator', 'Energieabgabe bei mehreren Stufen', 'Paddles-EKG mit Simulator (sofern vorgesehen)'],
+    notes: 'Paddles nach Gebrauch gründlich von Gel reinigen (Herstellerangaben); Gelreste zwischen den Paddles können Kriechwege bilden.',
+  },
+  {
+    id: 'defi-battery', name: 'Akku / Batterie für Defibrillator', category: 'Energieversorgung', devices: ['defibrillator'],
+    function: 'Energiequelle für Ladewandler, Monitoring und Selbsttests. Klinikgeräte meist mit wiederaufladbarem Akku, AED häufig mit nicht wiederaufladbarer Lithium-Batterie.',
+    wear: 'hoch', wearInfo: 'Kapazitätsverlust und steigender Innenwiderstand durch Alter, Zyklen und Temperatur; Batterien haben eine begrenzte Standby-Lebensdauer.',
+    failureModes: ['Verlängerte Ladezeit (Spannungseinbruch unter hoher Last: U = U₀ − I·Rᵢ)', 'Laden bricht ab bzw. zu wenige Schocks pro Ladung', 'Statusanzeige „nicht einsatzbereit“ / „Batterie schwach“'],
+    replacement: 'Austausch gemäß Herstellervorgabe (meist ohne Öffnen des Gerätes) nur gegen Originalakku/-batterie; Einbau- bzw. Ablaufdatum dokumentieren. Altakkus fachgerecht entsorgen.',
+    checksAfter: ['Statusanzeige / Selbsttest', 'Ladezeit bei maximaler Energie mit Defibrillator-Analysator', 'Akkutest bzw. Kapazitätsprüfung laut Hersteller'],
+    notes: 'Beschädigte oder aufgeblähte Lithium-Akkus sofort sicher lagern (Brandgefahr).',
+  },
+  {
+    id: 'defi-ecg-cable', name: 'EKG-Patientenkabel (defibrillationsfest)', category: 'Patientenkabel & Sensorik', devices: ['defibrillator'],
+    function: 'Separates EKG-Kabel (z. B. 3- oder 5-adrig) für die Rhythmusüberwachung und die R-Zacken-Synchronisation.',
+    wear: 'hoch', wearInfo: 'Knickstellen, Clip-/Druckknopfverschleiß, Desinfektionsmittel.',
+    failureModes: ['„Ableitung ab“ trotz angelegter Elektroden', 'Gestörtes EKG → unsichere R-Zacken-Erkennung bei Kardioversion', 'Netzbrumm durch beschädigten Schirm'],
+    replacement: 'Austausch gegen freigegebenes, defibrillationsfestes Originalzubehör.',
+    checksAfter: ['EKG-Prüfung mit EKG-Simulator (Ableitungen, HF, Amplitude, Lead-off)', 'Synchronisationsprüfung mit Defibrillator-Analysator'],
+  },
+  {
+    id: 'defi-recorder-paper', name: 'Thermopapier für Defibrillator-Drucker', category: 'Verbrauchsmaterial', devices: ['defibrillator'],
+    function: 'Ausdruck von EKG-Streifen, Ereignisprotokollen und Prüfberichten.',
+    wear: 'hoch', wearInfo: 'Verbrauchsmaterial; Thermopapier verblasst bei Licht und Wärme.',
+    failureModes: ['Kein bzw. blasser Ausdruck bei falschem Papiertyp oder falscher Einlegerichtung', 'Papierstau'],
+    replacement: 'Nur vom Hersteller freigegebenes Papier (Breite, Rasterung, Thermoempfindlichkeit) verwenden; Einlegen nach Gebrauchsanweisung.',
+    checksAfter: ['Testausdruck', 'Rasterung und Zeitachse plausibel'],
+    notes: 'Für die Dokumentation wichtiger Ereignisse ggf. Kopie anfertigen – Thermodrucke sind nicht langzeitstabil.',
+  },
+
+  /* ---------------- Ultraschall ---------------- */
+  {
+    id: 'us-transducer-linear', name: 'Linearschallkopf (hochfrequent)', category: 'Schallköpfe (Ultraschall)', devices: ['ultrasound'],
+    function: 'Array aus vielen nebeneinander liegenden Piezoelementen mit Anpassschichten und Silikonlinse; rechteckiges Bildfeld, hohe Frequenz (Beispiel: 7–15 MHz) für oberflächennahe Strukturen (Gefäße, Schilddrüse, Muskulatur).',
+    wear: 'hoch', wearInfo: 'Sturz/Stoß (Elementausfälle, Gehäuserisse), Linsenschäden durch ungeeignete Desinfektionsmittel, Kabelbruch am Knickschutz, verbogene Steckerpins.',
+    failureModes: ['Dunkler Längsstreifen (Schattenstreifen) durch ausgefallene Elemente oder Kabeladern', 'Blasen/Ablösung der Linse → Bildartefakte', 'Schallkopf nicht erkannt (Stecker, Kodierung)', 'Erhöhter Ableitstrom bei beschädigtem Gehäuse'],
+    replacement: 'Austausch als komplette Einheit gegen freigegebenen Schallkopf; Instandsetzung (z. B. Linsen- oder Kabeltausch) nur durch Hersteller bzw. spezialisierte Fachwerkstatt. Kein Öffnen in der Medizintechnik-Werkstatt.',
+    checksAfter: ['Sichtprüfung (Linse, Gehäuse, Kabel, Stecker)', 'Luftbild/Ringdown: gleichmäßig über die ganze Breite', 'Phantomprüfung (Auflösung, Eindringtiefe, Vergleich mit Referenzwerten)', 'Ableitstrommessung nach IEC 62353'],
+    notes: 'Schallköpfe nie am Kabel tragen oder aufhängen; nach Gebrauch in die Halterung, Kabel nicht überfahren.',
+  },
+  {
+    id: 'us-transducer-convex', name: 'Konvexschallkopf (Abdomen)', category: 'Schallköpfe (Ultraschall)', devices: ['ultrasound'],
+    function: 'Gekrümmtes Array mit fächerförmigem Bildfeld, niedrigere Frequenz (Beispiel: 2–5 MHz) für große Eindringtiefe (Abdomen, Geburtshilfe).',
+    wear: 'hoch', wearInfo: 'Wie Linearschallkopf; die gewölbte Linse ist an den Rändern besonders stoßempfindlich.',
+    failureModes: ['Schattenstreifen (radial im Fächer) bei Elementausfall', 'Verminderte Eindringtiefe durch gealterte Linse/Anpassschicht', 'Sporadische Bildausfälle durch Kabelbruch'],
+    replacement: 'Austausch als komplette Einheit gegen freigegebenen Schallkopf; Instandsetzung nur über Hersteller bzw. spezialisierte Fachwerkstatt.',
+    checksAfter: ['Sichtprüfung', 'Luftbild/Ringdown', 'Phantomprüfung (Eindringtiefe, Abstandsmessung)', 'Ableitstrommessung nach IEC 62353'],
+  },
+  {
+    id: 'us-transducer-endocavity', name: 'Endokavitärschallkopf', category: 'Schallköpfe (Ultraschall)', devices: ['ultrasound'],
+    function: 'Stabförmiger Schallkopf für Untersuchungen in Körperhöhlen (z. B. transvaginal/transrektal); wird mit Schutzhülle verwendet.',
+    wear: 'hoch', wearInfo: 'Häufige intensive Aufbereitung (Desinfektion) belastet Linse und Gehäuse; Risse, Haarrisse und Mantelschäden.',
+    failureModes: ['Haarrisse in Linse/Gehäuse → Hygienerisiko und erhöhter Ableitstrom', 'Schattenstreifen durch Elementausfall', 'Verfärbung/Aufquellen durch ungeeignete Desinfektionsmittel'],
+    replacement: 'Austausch bzw. Instandsetzung ausschließlich über Hersteller oder spezialisierte Fachwerkstatt. Beschädigte Schallköpfe sofort außer Betrieb nehmen.',
+    checksAfter: ['Sichtprüfung mit Lupe (Haarrisse)', 'Ableitstrom-/Isolationsprüfung nach Herstellervorgabe und IEC 62353', 'Luftbild und Phantomprüfung', 'Validierte Aufbereitung vor dem ersten Einsatz'],
+    notes: 'Aufbereitung nach Risikoeinstufung (in der Regel semikritisch) gemäß Hygieneplan und Herstellerangaben; Schutzhülle ersetzt nicht die Aufbereitung.',
+  },
+  {
+    id: 'us-air-filter', name: 'Luftfilter (Gerätekühlung)', category: 'Kühlung (Ultraschall)', devices: ['ultrasound'],
+    function: 'Hält Staub von Beamformer- und Rechnerelektronik fern.',
+    wear: 'hoch', wearInfo: 'Zusetzen durch Staub und Flusen; Reinigungs- bzw. Wechselintervall laut Hersteller.',
+    failureModes: ['Übertemperaturmeldung, Leistungsreduzierung, Abschaltung', 'Laute Lüfter durch erhöhte Drehzahl'],
+    replacement: 'Reinigung bzw. Austausch durch Anwender oder Medizintechnik nach Gebrauchsanweisung (ohne Öffnen des Gerätes, sofern so vorgesehen).',
+    checksAfter: ['Sitz des Filters', 'Lüftergeräusch, keine Temperaturmeldung nach Aufwärmphase'],
+  },
+  {
+    id: 'us-trackball', name: 'Trackball-Einheit / Bedienelement', category: 'Bedienung (Ultraschall)', devices: ['ultrasound'],
+    function: 'Cursorsteuerung für Messungen, Bildausschnitt und Doppler-Messfenster.',
+    wear: 'mittel', wearInfo: 'Verschmutzung durch Gel und Desinfektionsmittel, Verschleiß der Lager/Rollen bzw. Sensorik.',
+    failureModes: ['Cursor springt oder bewegt sich nur in einer Achse', 'Kugel klemmt'],
+    replacement: 'Reinigung nach Gebrauchsanweisung; Austausch der Einheit nach Herstellerunterlagen durch qualifiziertes Personal.',
+    checksAfter: ['Funktionstest in beiden Achsen', 'Messfunktion (Abstand) am Phantom'],
+  },
+
+  /* ---------------- Hämodialyse ---------------- */
+  {
+    id: 'dia-blood-tubing-set', name: 'Blutschlauchsystem (Einweg)', category: 'Einwegmaterial (Dialyse)', devices: ['dialysis'],
+    function: 'Steriler arterieller und venöser Schlauchteil mit Pumpsegment, Tropfkammer(n) und Druckmessanschlüssen; bildet zusammen mit dem Dialysator den extrakorporalen Kreislauf.',
+    wear: 'hoch', wearInfo: 'Einwegartikel für eine Behandlung.',
+    failureModes: ['Falsches oder falsch eingelegtes Pumpsegment → abweichende Förderrate', 'Undichte Konnektion → Luftansaugung (arteriell) bzw. Blutverlust (venös)', 'Knick → Druckalarme'],
+    replacement: 'Nur freigegebene, zum Gerät passende Systeme; Einlegen und Befüllen (Priming) durch geschultes Personal nach Gebrauchsanweisung.',
+    checksAfter: ['Gerätetest vor Behandlung', 'Druck- und Luftüberwachung aktiv'],
+  },
+  {
+    id: 'dia-transducer-protector', name: 'Transducer-Protektor (hydrophober Druckfilter)', category: 'Einwegmaterial (Dialyse)', devices: ['dialysis'],
+    function: 'Hydrophober Filter zwischen Druckmessleitung des Blutschlauchsystems und Drucksensor des Gerätes; überträgt Luftdruck, hält Flüssigkeit und Keime zurück.',
+    wear: 'hoch', wearInfo: 'Einwegartikel (häufig im Schlauchsystem integriert). Wird er nass, sperrt er und verfälscht die Druckmessung.',
+    failureModes: ['Nasser/blutbenetzter Protektor → Druckanzeige eingefroren oder falsch', 'Kontaminationsrisiko für den geräteseitigen Drucksensor'],
+    replacement: 'Wechsel durch Anwender nach Gebrauchsanweisung. Bei Verdacht auf Durchschlag (Flüssigkeit auf der Geräteseite) Gerät nicht weiterverwenden, Prüfung und Desinfektion durch Medizintechnik/Herstellerservice nach Herstellerangaben.',
+    checksAfter: ['Plausible Druckanzeige', 'Gerätetest'],
+  },
+  {
+    id: 'dia-dialysate-filter', name: 'Dialysatfilter', category: 'Hydraulik (Dialyse)', devices: ['dialysis'],
+    function: 'Membranfilter im Dialysatweg, hält Bakterien und Endotoxine zurück und verbessert so die mikrobiologische Qualität des Dialysats.',
+    wear: 'hoch', wearInfo: 'Begrenzte Standzeit (Zeit bzw. Anzahl Behandlungen/Desinfektionen laut Hersteller).',
+    failureModes: ['Standzeit überschritten → Filterwirkung nicht mehr gesichert', 'Undichtigkeit → Gerätetest (Druckhaltetest) schlägt fehl'],
+    replacement: 'Wechsel nach Herstellerangaben durch geschultes Personal; Wechseldatum dokumentieren, anschließend Desinfektion/Spülung nach Gebrauchsanweisung.',
+    checksAfter: ['Gerätetest (Dichtheit)', 'Standzeitzähler zurückgesetzt bzw. dokumentiert', 'Mikrobiologische Kontrollen nach Hygieneplan'],
+  },
+  {
+    id: 'dia-blood-pump-rotor', name: 'Blutpumpenrotor mit Rollen', category: 'Blutseite (Dialyse)', devices: ['dialysis'],
+    function: 'Rotor der Rollenpumpe; die Rollen quetschen das Pumpsegment und fördern das Blut.',
+    wear: 'mittel', wearInfo: 'Verschleiß von Rollen und Lagern, Verschmutzung; der Rollenabstand (Okklusion) beeinflusst Förderrate und Blutschädigung.',
+    failureModes: ['Abweichende Förderrate', 'Erhöhte mechanische Belastung des Blutes (Hämolyse-Risiko) bei falscher Okklusion', 'Laufgeräusche'],
+    replacement: 'Austausch und Einstellung ausschließlich durch vom Hersteller geschultes Personal nach Servicehandbuch (sicherheitsrelevante Baugruppe des Blutkreislaufs).',
+    checksAfter: ['Förderrate nach Herstellerprüfanweisung', 'Gerätetest', 'Sicherheitstechnische Prüfung nach Herstellervorgabe'],
+  },
+  {
+    id: 'dia-coupling-seals', name: 'Dichtungen der Dialysatkupplungen', category: 'Hydraulik (Dialyse)', devices: ['dialysis'],
+    function: 'Dichten die Kupplungen zwischen Gerät und Dialysator bzw. Spülbrücke ab.',
+    wear: 'mittel', wearInfo: 'Alterung durch Desinfektionsmittel, Hitze und Steckzyklen; Kristallablagerungen.',
+    failureModes: ['Tropfende Kupplung, Kristallbildung', 'Gerätetest (Dichtheit) schlägt fehl', 'Luftansaugung in den Dialysatweg → Bilanzfehler'],
+    replacement: 'Wechsel nach Herstellerangaben durch geschultes Personal mit freigegebenen Originaldichtungen; danach Desinfektion.',
+    checksAfter: ['Sichtprüfung auf Leckage', 'Gerätetest (Druckhaltetest)', 'Desinfektionsprogramm'],
+  },
+  {
+    id: 'dia-concentrate-wand', name: 'Konzentratansaugstab mit Schlauch', category: 'Hydraulik (Dialyse)', devices: ['dialysis'],
+    function: 'Saugt saures Konzentrat bzw. Bikarbonat aus dem Kanister an (bei zentraler Versorgung entsprechender Anschluss).',
+    wear: 'mittel', wearInfo: 'Verhärtung des Schlauchs, Kristallbildung, Risse.',
+    failureModes: ['Luft in der Konzentratleitung → Leitfähigkeitsalarm, Bypass', 'Undichtigkeit'],
+    replacement: 'Austausch gegen Originalteil nach Herstellerangaben; anschließend Desinfektion/Spülung.',
+    checksAfter: ['Leitfähigkeit stabil (Vergleich mit Referenzmessgerät bei Bedarf)', 'Gerätetest'],
+    notes: 'Konzentrate niemals verwechseln – Art und Kennzeichnung am Kanister prüfen.',
+  },
+  {
+    id: 'dia-battery', name: 'Notstromakku (Dialysegerät)', category: 'Energieversorgung', devices: ['dialysis'],
+    function: 'Überbrückt Netzausfälle, damit zumindest die Blutseite weiterbetrieben bzw. das Blut zurückgegeben werden kann (Funktionsumfang herstellerabhängig).',
+    wear: 'hoch', wearInfo: 'Kapazitätsverlust durch Alter und Temperatur.',
+    failureModes: ['Akkualarm im Selbsttest', 'Zu kurze Überbrückungszeit bei Netzausfall'],
+    replacement: 'Austausch nach Herstellerangaben durch qualifiziertes Personal; nur Originalakkus.',
+    checksAfter: ['Akkutest laut Hersteller', 'Netzausfallsimulation nach Herstellerprüfanweisung', 'Wiederholungsprüfung nach IEC 62353, falls das Gerät geöffnet wurde'],
+  },
+]);

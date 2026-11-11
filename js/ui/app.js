@@ -66,6 +66,7 @@
   function route() {
     const hash = g.location.hash || '#/';
     const main = document.getElementById('view');
+    document.querySelectorAll('.modal-back').forEach((m) => m.remove()); // offene Dialoge beim Seitenwechsel schließen
     clear(main);
     setActive(hash);
     let node = null;

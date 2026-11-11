@@ -138,6 +138,7 @@
     }
     const t = h('div.toast' + (kind ? '.' + kind : ''), msg);
     host.appendChild(t);
+    while (host.children.length > 4) host.removeChild(host.firstChild);
     setTimeout(() => t.classList.add('out'), 3200);
     setTimeout(() => t.remove(), 3800);
   }

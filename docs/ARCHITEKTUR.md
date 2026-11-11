@@ -73,7 +73,7 @@ MTRL.registerCase({
     functionChecks:[{ id, title, passFinding, investigation }],
   },
   explanation:   { html },                              // 7 Erklärung
-  documentation: { fields: [select|multi|text] },       // 8 Dokumentation
+  documentation: { fields: [select|multi|text] },       // 8 Dokumentation (multi: correct + optional[])
   quiz: [{ q, options, correct, explain }],             // 9 Abschlusstest
 });
 ```

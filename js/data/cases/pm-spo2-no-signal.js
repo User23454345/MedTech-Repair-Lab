@@ -878,10 +878,12 @@
             { value: 'sim', label: 'SpO₂-/Patientensimulator' },
             { value: 'sa', label: 'Sicherheitsanalysator' },
             { value: 'dmm', label: 'Digitalmultimeter (Fehlersuche)' },
+            { value: 'osc', label: 'Oszilloskop (optionale Signalverfolgung)' },
             { value: 'flow', label: 'Beatmungsanalysator' },
           ],
           correct: ['sim', 'sa', 'dmm'],
-          hint: 'Alle für Fehlersuche und Prüfung eingesetzten Messmittel aufführen.',
+          optional: ['osc'],
+          hint: 'Alle tatsächlich für Fehlersuche und Prüfung eingesetzten Messmittel aufführen – das Oszilloskop nur, wenn du es genutzt hast.',
         },
         {
           id: 'release',

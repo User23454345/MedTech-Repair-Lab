@@ -299,9 +299,11 @@
           ok = v === f.correct;
           msg = ok ? '' : f.hint || 'Bitte prüfen.';
         } else if (f.type === 'multi') {
+          // optional: Werte, die je nach gewähltem Untersuchungsweg zutreffen können (z. B. optional genutzte Messgeräte)
           const sel = new Set(v || []);
           const need = new Set(f.correct || []);
-          ok = sel.size === need.size && [...need].every((x) => sel.has(x));
+          const allowed = new Set([...(f.correct || []), ...(f.optional || [])]);
+          ok = [...need].every((x) => sel.has(x)) && [...sel].every((x) => allowed.has(x));
           msg = ok ? '' : f.hint || 'Auswahl unvollständig oder fehlerhaft.';
         } else if (f.type === 'text') {
           ok = !f.required || (typeof v === 'string' && v.trim().length >= (f.minLength || 3));

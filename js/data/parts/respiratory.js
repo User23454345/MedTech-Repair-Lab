@@ -1,0 +1,123 @@
+/*
+ * Ersatz- und Verschleißteile: Beatmung & Absaugung (generisch, Lernmodell)
+ * Keine realen Artikelnummern – Beschaffung ausschließlich nach Ersatzteilliste des Herstellers.
+ */
+MTRL.registerParts([
+  /* ---------------- Intensiv-Beatmungsgerät ---------------- */
+  {
+    id: 'vent-exp-flow-sensor', name: 'Exspiratorischer Flowsensor', category: 'Sensorik (Beatmung)', devices: ['ventilator'],
+    function: 'Misst den Ausatemflow (z. B. Hitzdraht-Anemometer oder Differenzdruckprinzip). Daraus berechnet das Gerät das exspiratorische Tidalvolumen (VTe) und das Atemminutenvolumen.',
+    wear: 'hoch', wearInfo: 'Ablagerungen von Sekret und Medikamentenaerosol, Kondensat, Aufbereitungszyklen, mechanische Beschädigung des Messelements.',
+    failureModes: ['VTe/MV zu niedrig angezeigt bei korrekter Abgabe (Messfehler) → Fehlalarme „MV niedrig“ / „Leckage“', 'Instabile, springende Volumenwerte durch Kondensat', 'Flowsensor-Kalibrierung im Gerätecheck nicht bestanden', 'Kein Messwert (Sensor defekt oder nicht erkannt)'],
+    replacement: 'Austausch durch Anwender oder Medizintechnik gemäß Gebrauchsanweisung (Zubehör-/Verschleißteil, kein Eingriff in das Gerät). Anschließend Kalibrierung über die Gerätefunktion, sofern vom Hersteller vorgesehen. Messelement nicht berühren, nicht mit Druckluft ausblasen.',
+    checksAfter: ['Flowsensor-Kalibrierung bzw. Gerätecheck nach Gebrauchsanweisung', 'Vergleich mit Beatmungsanalysator an Testlunge bei mindestens zwei Einstellungen', 'Alarmprüfung (z. B. Diskonnektion, MV niedrig)'],
+    notes: 'Ob ein Flowsensor wiederaufbereitet werden darf (Verfahren, maximale Zyklen) oder als Einwegartikel gilt, legt ausschließlich der Hersteller fest.',
+  },
+  {
+    id: 'vent-patient-circuit', name: 'Patientenschlauchsystem (Beatmung)', category: 'Patientenzubehör (Beatmung)', devices: ['ventilator'],
+    function: 'Inspirations- und Exspirationsschenkel mit Y-Stück; verbindet Gerät und Patient, ggf. mit beheizten Schläuchen.',
+    wear: 'hoch', wearInfo: 'Einweg oder begrenzte Aufbereitungszyklen; Risse, undichte Konnektoren, Kondensatansammlung.',
+    failureModes: ['Leckage → VT zu gering, PEEP nicht gehalten, Alarm „Leckage“', 'Gerätecheck (Dichtheit) nicht bestanden', 'Kondensat im Schlauch → Strömungsgeräusche, Triggerprobleme'],
+    replacement: 'Wechsel durch Anwender nach Hygieneplan bzw. Herstellerangaben; nur freigegebene Schlauchsysteme (Compliance des Schlauchsystems geht in die Volumenberechnung ein).',
+    checksAfter: ['Gerätecheck mit Dichtheitsprüfung und Ermittlung der Schlauchcompliance', 'Probebeatmung an Testlunge'],
+  },
+  {
+    id: 'vent-filter', name: 'Atemgasfilter (Bakterien-/Virenfilter, HME)', category: 'Patientenzubehör (Beatmung)', devices: ['ventilator'],
+    function: 'Filtert Keime aus dem Atemgas; HME-Filter befeuchten und erwärmen zusätzlich passiv. Exspirationsfilter schützen Exspirationsventil und Flowsensor.',
+    wear: 'hoch', wearInfo: 'Feuchtigkeitsaufnahme, Verstopfung durch Sekret oder Aerosol – Widerstand steigt.',
+    failureModes: ['Erhöhter Atemwegswiderstand (Spitzendruck steigt)', 'Durchfeuchteter Filter verliert Filterwirkung', 'Fehlender Exspirationsfilter bei Vernebelung → Ablagerungen am Flowsensor (nach Herstellerangaben)'],
+    replacement: 'Wechsel nach Herstellerangaben/Hygieneplan; bei Vernebelung Herstellerhinweise zur Filterverwendung beachten.',
+    checksAfter: ['Gerätecheck', 'Plausibilität des Spitzendrucks'],
+  },
+  {
+    id: 'vent-exp-valve-membrane', name: 'Exspirationsventil-Membran', category: 'Pneumatik (Beatmung)', devices: ['ventilator'],
+    function: 'Dichtet das Exspirationsventil während der Inspiration ab und regelt in der Exspiration den PEEP.',
+    wear: 'mittel', wearInfo: 'Alterung des Elastomers, Risse, falsche Montage nach Aufbereitung.',
+    failureModes: ['PEEP wird nicht gehalten', 'Leckage, VT zu gering', 'Gerätecheck nicht bestanden'],
+    replacement: 'Austausch bzw. Aufbereitung gemäß Gebrauchsanweisung/Servicehandbuch; korrekte Einbaulage beachten.',
+    checksAfter: ['Gerätecheck (Dichtheit)', 'PEEP- und VT-Prüfung mit Beatmungsanalysator'],
+  },
+  {
+    id: 'vent-o2-sensor', name: 'O₂-Sensor (Beatmungsgerät)', category: 'Sensorik (Beatmung)', devices: ['ventilator'],
+    function: 'Überwacht die abgegebene Sauerstoffkonzentration (z. B. galvanische Zelle).',
+    wear: 'hoch', wearInfo: 'Galvanische Zellen verbrauchen sich chemisch; Lebensdauer abhängig von O₂-Exposition und Temperatur.',
+    failureModes: ['FiO₂-Anzeige zu niedrig/zu hoch', 'O₂-Kalibrierung nicht möglich', 'Alarm „O₂-Sensor prüfen“'],
+    replacement: 'Austausch nach Herstellerangabe, anschließend O₂-Kalibrierung über die Gerätefunktion. Verbrauchte Zellen fachgerecht entsorgen.',
+    checksAfter: ['O₂-Kalibrierung', 'FiO₂-Vergleich mit kalibriertem Analysator bei mehreren Konzentrationen', 'Alarmprüfung FiO₂'],
+  },
+  {
+    id: 'vent-water-trap', name: 'Wasserfalle (Kondensatfalle)', category: 'Patientenzubehör (Beatmung)', devices: ['ventilator'],
+    function: 'Sammelt Kondensat im Schlauchsystem bzw. vor dem Exspirationsmodul.',
+    wear: 'mittel', wearInfo: 'Dichtungen, Rissbildung, nicht entleerte Behälter.',
+    failureModes: ['Leckage an der Wasserfalle', 'Kondensat gelangt zum Flowsensor → Messfehler'],
+    replacement: 'Austausch/Aufbereitung nach Gebrauchsanweisung; regelmäßig entleeren.',
+    checksAfter: ['Gerätecheck (Dichtheit)'],
+  },
+  {
+    id: 'vent-air-inlet-filter', name: 'Lufteinlass- und Kühlluftfilter', category: 'Wartungsteile (Beatmung)', devices: ['ventilator'],
+    function: 'Schützt Gebläse/Turbine bzw. Gasweg und Elektronik vor Staub.',
+    wear: 'mittel', wearInfo: 'Verschmutzung; Wechselintervall nach Herstellerangabe.',
+    failureModes: ['Überhitzung, Lüfterwarnung', 'Reduzierte Gasförderung bei Turbinengeräten'],
+    replacement: 'Wechsel im Rahmen der Wartung nach Herstellerangabe.',
+    checksAfter: ['Sichtprüfung', 'Gerätecheck'],
+  },
+  {
+    id: 'vent-battery', name: 'Akku für Beatmungsgerät', category: 'Energieversorgung', devices: ['ventilator'],
+    function: 'Überbrückt Netzausfall und Transport; bei lebenserhaltender Beatmung sicherheitsrelevant.',
+    wear: 'hoch', wearInfo: 'Kapazitätsverlust durch Zyklen, Alter und Temperatur.',
+    failureModes: ['Laufzeit zu kurz', 'Akkufehlermeldung', 'Keine Umschaltung bei Netzausfall'],
+    replacement: 'Austausch ausschließlich gemäß Herstellerangaben mit Originalakku durch qualifiziertes Personal.',
+    checksAfter: ['Akkutest nach Herstellervorgabe', 'Netzausfall-Umschaltung (nicht am Patienten)'],
+    notes: 'Beschädigte oder aufgeblähte Akkus sofort sicher lagern (Brandgefahr).',
+  },
+
+  /* ---------------- Elektrisches Absauggerät ---------------- */
+  {
+    id: 'suc-canister-lid-seal', name: 'Sekretbehälter-Deckel mit Dichtung', category: 'Absaugung', devices: ['suction-device'],
+    function: 'Verschließt den Sekretbehälter luftdicht und trägt die Anschlüsse für Patienten- und Vakuumschlauch.',
+    wear: 'hoch', wearInfo: 'Dichtung altert, wird bei Aufbereitung verformt oder falsch eingesetzt.',
+    failureModes: ['Eingestellter Unterdruck wird nicht erreicht', 'Pfeifgeräusch am Deckel'],
+    replacement: 'Austausch gegen freigegebenes Originalteil durch Anwender oder Medizintechnik.',
+    checksAfter: ['Vakuumprüfung mit Referenzmanometer', 'Sichtprüfung des Sitzes'],
+  },
+  {
+    id: 'suc-bacterial-filter', name: 'Hydrophober Bakterienfilter (Absaugung)', category: 'Absaugung', devices: ['suction-device'],
+    function: 'Schützt Pumpe und Umgebung vor Flüssigkeit und Keimen; sperrt bei Flüssigkeitskontakt.',
+    wear: 'hoch', wearInfo: 'Durchfeuchtung, Verschmutzung; Wechsel nach Intervall oder nach Flüssigkeitskontakt.',
+    failureModes: ['Unterdruck vorhanden, aber geringe/keine Saugleistung', 'Kontamination der Pumpe bei fehlendem Filter'],
+    replacement: 'Austausch nach Herstellerangaben; nie ohne Filter betreiben.',
+    checksAfter: ['Saugleistung', 'Vakuumprüfung'],
+  },
+  {
+    id: 'suc-patient-tubing', name: 'Absaug- und Verbindungsschläuche', category: 'Absaugung', devices: ['suction-device'],
+    function: 'Verbinden Absaugkatheter, Sekretbehälter und Gerät.',
+    wear: 'hoch', wearInfo: 'Einweg oder begrenzte Aufbereitung; Knicke, Risse, Verhärtung.',
+    failureModes: ['Leckage', 'Verstopfung', 'Abknicken unter Unterdruck (zu weiches Material)'],
+    replacement: 'Wechsel nach Hygieneplan; nur unterdruckfeste, freigegebene Schläuche.',
+    checksAfter: ['Vakuumprüfung', 'Probeabsaugung (Wasser)'],
+  },
+  {
+    id: 'suc-overflow-valve', name: 'Überlaufschutz (Schwimmerventil)', category: 'Absaugung', devices: ['suction-device'],
+    function: 'Verschließt die Saugleitung bei vollem Behälter und verhindert Flüssigkeitseintritt in Filter und Pumpe.',
+    wear: 'mittel', wearInfo: 'Schwimmer verklebt oder verformt, Dichtsitz verschmutzt.',
+    failureModes: ['Überlaufschutz sperrt nicht → Flüssigkeit in Filter/Pumpe', 'Sperrt dauerhaft → keine Saugwirkung'],
+    replacement: 'Schutzfunktion: nur Originalteil gemäß Herstellerangaben; Funktion nach Aufbereitung prüfen.',
+    checksAfter: ['Funktionsprüfung Überlaufschutz nach Herstellervorgabe', 'Vakuumprüfung'],
+  },
+  {
+    id: 'suc-pump-diaphragm', name: 'Pumpenmembran / Ventilsatz der Vakuumpumpe', category: 'Absaugung', devices: ['suction-device'],
+    function: 'Bewegliche Membran und Ventilplättchen der Membranpumpe erzeugen den Unterdruck.',
+    wear: 'mittel', wearInfo: 'Ermüdung und Rissbildung durch Laufzeit; Verschleiß durch angesaugte Flüssigkeit bei defektem Filter.',
+    failureModes: ['Endvakuum sinkt', 'Saugleistung sinkt', 'Laufgeräusche'],
+    replacement: 'Austausch nur durch qualifiziertes Personal nach Servicehandbuch (Geräteöffnung); danach Funktions- und elektrische Sicherheitsprüfung.',
+    checksAfter: ['Endvakuum und Saugleistung', 'Elektrische Sicherheit nach IEC 62353'],
+  },
+  {
+    id: 'suc-battery', name: 'Akku für tragbares Absauggerät', category: 'Energieversorgung', devices: ['suction-device'],
+    function: 'Netzunabhängiger Betrieb (Notfall, Transport).',
+    wear: 'hoch', wearInfo: 'Kapazitätsverlust durch Zyklen und Alter.',
+    failureModes: ['Laufzeit zu kurz', 'Gerät startet im Akkubetrieb nicht'],
+    replacement: 'Austausch gemäß Herstellerangaben, nur Originalakkus.',
+    checksAfter: ['Laufzeittest', 'Ladeanzeige'],
+  },
+]);
