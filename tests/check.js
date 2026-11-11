@@ -69,7 +69,14 @@ sandbox.document = {
 vm.createContext(sandbox);
 const UI_ONLY = /js\/ui\/(views|case-view|app)\.js$/;
 for (const s of scripts) {
-  if (UI_ONLY.test(s)) continue;
+  if (UI_ONLY.test(s)) {
+    try {
+      new vm.Script(fs.readFileSync(path.join(ROOT, s), 'utf8'), { filename: s });
+    } catch (e) {
+      fail(`Syntaxfehler in ${s}: ${e.message}`);
+    }
+    continue;
+  }
   try {
     vm.runInContext(fs.readFileSync(path.join(ROOT, s), 'utf8'), sandbox, { filename: s });
   } catch (e) {

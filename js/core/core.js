@@ -20,6 +20,8 @@
   MTRL.parts = new Map();
   MTRL.knowledge = new Map();
   MTRL.sandboxes = new Map();
+  MTRL.views = {};
+  MTRL.ui = {};
   MTRL.problems = []; // Validierungsprobleme beim Registrieren (für Tests/Konsole)
 
   function problem(kind, id, msg) {

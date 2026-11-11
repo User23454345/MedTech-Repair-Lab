@@ -31,6 +31,8 @@
       sideTimer = setTimeout(() => {
         renderSidebar();
         renderHeader();
+        const old = content.querySelector('.step-nav');
+        if (old) old.replaceWith(nav(MTRL.CASE_STEPS[session.stepIndex].id));
       }, 60);
     });
 

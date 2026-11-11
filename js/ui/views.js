@@ -154,7 +154,12 @@
       )],
       ['Aufbau & Komponenten', () => h('div.comp-grid', d.components.map((c) => h('div.comp', h('div.comp-head', h('b', c.name), MTRL.ui.wearBadge(c.wear)), h('p', c.function), c.notes ? h('p.muted', c.notes) : null)))],
       ['Signalweg', () => h('div', h('p', 'Blockschaltbild des Signal- bzw. Energieflusses (vereinfacht). Fehlersuche folgt diesem Weg – von der Quelle zur Anzeige oder in Halbierungsschritten.'), MTRL.ui.signalChain(d.signalPath))],
-      ['Typische Fehler', () => h('table.plain', h('thead', h('tr', h('th', 'Fehlerbild'), h('th', 'Mögliche Ursachen'), h('th', 'Sinnvolle Prüfungen'))), h('tbody', d.faults.map((f) => h('tr', h('td', h('b', f.symptom)), h('td', h('ul', f.causes.map((c) => h('li', c)))), h('td', h('ul', f.checks.map((c) => h('li', c)))))))))],
+      ['Typische Fehler', () => {
+        const rows = d.faults.map((f) =>
+          h('tr', h('td', h('b', f.symptom)), h('td', h('ul', f.causes.map((c) => h('li', c)))), h('td', h('ul', f.checks.map((c) => h('li', c)))))
+        );
+        return h('table.plain', h('thead', h('tr', h('th', 'Fehlerbild'), h('th', 'Mögliche Ursachen'), h('th', 'Sinnvolle Prüfungen'))), h('tbody', rows));
+      }],
       ['Verschleiß & Ersatzteile', () => h('div', h('p', 'Typische Verschleiß- und Ersatzteile dieses Gerätetyps (generisch):'), h('div.chips', (d.wearParts || []).map(MTRL.ui.partLink)))],
       ['Funktionskontrolle', () => h('div', h('p', 'Nach jeder Instandsetzung muss die Funktion belegt werden. Typischer Umfang (Herstellervorgaben haben Vorrang):'), h('ol.checklist', d.functionChecks.map((c) => h('li', c))))],
       ['Sicherheit', () => h('div', h('ul.safety-list', d.safety.map((s) => h('li', s))), MTRL.ui.disclaimer(true))],
